@@ -36,7 +36,22 @@ co(function* () {
     res.sendFile(path.join(__dirname + '/form/index.html'));
   });  
   
-/*
+  app.post('/signin', function (req, res) {
+    const cred = req.body;
+    console.log(req.body);
+    if (isUser(req.body)) {
+        res.send('tu es connecté');
+    } else {
+        res.send('GFY!');
+    }
+  });  
+
+/*  
+  app.get('/signup', function (req, res) {
+    res.sendFile(path.join(__dirname + '/form/index.html'));
+  });  
+  
+
   app.post('/signin', function (req, res) {
     res.render('./form/signin.html', { name: req.body.name });
   });  
@@ -53,4 +68,9 @@ function wrapAsync(fn) {
 			yield fn(req, res, next);
 		}).catch(next);
 	};
+}
+
+// *** Temporaire IS USER ? ***
+function isUser(credential) {   
+    return (credential.name == "toto");
 }
