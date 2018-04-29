@@ -24,8 +24,16 @@ co(function* () {
   app.use(bodyParser.urlencoded({ extended: true }));  
   app.get('/test', wrapAsync(function* (req, res, next) {  	
 //  	yield db.collection('accounts').insert(t[1]);
-//  	const accounts = yield db.collection('accounts').find().toArray();
-	const el = yield db.collection('accounts').find().limit(1)
+ 	const d = yield db.collection('accounts').find().toArray();
+ 	console.log(d);
+/*	const d = yield db.collection('accounts').updateOne(
+		{ mail: "langly@langly.fr" },
+		{ $set: {actif: true} }
+	);
+*/
+	const g = (yield db.collection('accounts').findOne({actif: "x"})) || function () {throw Error('ARGG')}();
+	console.log(g);
+	res.send('hey');
   }));
 
   app.get('/', (req, res) => {
