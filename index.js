@@ -7,8 +7,9 @@ co(function* () {
 	const db = (yield mongoClient.connect(process.env.MONGOLAB_URI)).db();
 
   app.get('/', wrapAsync(function* (req, res, next) {
-  	const totos = yield db.collection('toto').find().toArray();
-    res.send("hello there" + totos);
+  	const accounts = yield db.collection('accounts').find().toArray();
+
+  	yield db.collection('accounts').insertOne(account);
   }));
 
   app.listen(port, _ => console.log('App is listening !'));
