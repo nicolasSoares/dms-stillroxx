@@ -34,25 +34,29 @@ co(function* () {
 		res.send('Hello World!');
 	}));
 
+
+	// Sign In form
+
 	app.get('/signin', (req, res) => {
-		res.sendFile(path.join(__dirname + '/form/index.html'));
+		res.sendFile(path.join(__dirname + '/form/signin.html'));
 	});
 
 	app.post('/signin', wrapAsync(function* (req, res, next) {
 		const account = yield Accounts.connect(req.body);
 		res.send("bienvenue: " + account.name);
-	}));
+	}));  
 
-/*  
-  app.get('/signup', function (req, res) {
-    res.sendFile(path.join(__dirname + '/form/index.html'));
-  });  
+	//Sign Up form
+
+	app.get('/signup', function (req, res) {
+		res.sendFile(path.join(__dirname + '/form/signup.html'));
+	});  
   
-
-  app.post('/signin', function (req, res) {
-    res.render('./form/signin.html', { name: req.body.name });
-  });  
- */
+/*
+	app.post('/signin', function (req, res) {
+		
+	});  
+*/
 
   app.listen(port, _ => console.log('App is listening on port ', port));
   
