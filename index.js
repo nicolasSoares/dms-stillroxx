@@ -20,39 +20,28 @@ const port = process.env.PORT || 3002;
 const path = require('path');
 
 co(function* () {
-	const db = (yield mongoClient.connect(process.env.MONGOLAB_URI)).db();
-  app.use(bodyParser.urlencoded({ extended: true }));  
-  app.get('/test', wrapAsync(function* (req, res, next) {  	
-//  	yield db.collection('accounts').insert(t[1]);
- 	const d = yield db.collection('accounts').find().toArray();
- 	console.log(d);
-/*	const d = yield db.collection('accounts').updateOne(
-		{ mail: "langly@langly.fr" },
-		{ $set: {actif: true} }
-	);
-*/
-	const g = (yield db.collection('accounts').findOne({actif: "x"})) || function () {throw Error('ARGG')}();
-	console.log(g);
-	res.send('hey');
-  }));
+	const Accounts = yield require('./db')();
+	
+	app.use(bodyParser.urlencoded({ extended: true }));  
 
-  app.get('/', (req, res) => {
-    res.send('Hello World!');
-  });
+	app.get('/test', wrapAsync(function* (req, res, next) {
+		yield Accounts.update({name: "marc"}, {a:1,r:45,g:true});
+		res.send('hey');
+	}));
 
-  app.get('/signin', function (req, res) {
-    res.sendFile(path.join(__dirname + '/form/index.html'));
-  });  
-  
-  app.post('/signin', function (req, res) {
-    const cred = req.body;
-    console.log(req.body);
-    if (isUser(req.body)) {
-        res.send('tu es connecté');
-    } else {
-        res.send('GFY!');
-    }
-  });  
+	app.get('/', wrapAsync(function* (req, res, next) {
+		yield Accounts.create({name: "marc", pwd: "tet"});
+		res.send('Hello World!');
+	}));
+
+	app.get('/signin', (req, res) => {
+		res.sendFile(path.join(__dirname + '/form/index.html'));
+	});
+
+	app.post('/signin', wrapAsync(function* (req, res, next) {
+		const account = yield Accounts.connect(req.body);
+		res.send("bienvenue: " + account.name);
+	}));
 
 /*  
   app.get('/signup', function (req, res) {
@@ -63,7 +52,8 @@ co(function* () {
   app.post('/signin', function (req, res) {
     res.render('./form/signin.html', { name: req.body.name });
   });  
- */   
+ */
+
   app.listen(port, _ => console.log('App is listening on port ', port));
   
 }).catch(err => {
