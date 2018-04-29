@@ -12,13 +12,20 @@ const t = [
 const express = require('express');
 const app = express('express')();
 const co = require('co');
+const bodyParser = require('body-parser');
+
 
 co(function* () {
+  app.use(bodyParser.urlencoded({ extended: true }));
+  
   app.get('/', (req, res) => {
     res.send('Hello World!');
   });
 
-  app.use('/signin', express.static('form'))
+  app.post('/signin', function (req, res) {
+      res.render('', { name: x});
+  }
+  
   app.listen(process.env.PORT, _ => console.log('App is listening !'));
 
 }).catch(err => {
