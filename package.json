@@ -1,0 +1,20 @@
+{
+  "name": "dms-roxx",
+  "version": "0.0.1",
+  "description": "Dead man switch in node JS hosted on Heroku",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "heroku",
+    "js",
+    "dms"
+  ],
+  "author": "Magdalene sansfamille",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "co": "^4.6.0",
+    "mongodb": "*"
+  }
+}
