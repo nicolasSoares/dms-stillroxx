@@ -18,6 +18,7 @@ const co = require('co');
 const mongoClient = require("mongodb").MongoClient
 const port = process.env.PORT || 3002;
 const path = require('path');
+const svgCaptcha = require('svg-captcha');
 
 co(function* () {
 	const Accounts = yield require('./db')();
@@ -37,19 +38,27 @@ co(function* () {
 
 	// Sign In form
 
-	app.get('/signin', (req, res) => {
-		res.sendFile(path.join(__dirname + '/form/signin.html'));
+	app.get('/auth/login', (req, res) => {
+		res.sendFile(path.join(__dirname + '/form/login.html'));
 	});
 
-	app.post('/signin', wrapAsync(function* (req, res, next) {
+	app.post('/auth/login', wrapAsync(function* (req, res, next) {
 		const account = yield Accounts.connect(req.body);
 		res.send("bienvenue: " + account.name);
 	}));  
 
 	//Sign Up form
 
-	app.get('/signup', function (req, res) {
-		res.sendFile(path.join(__dirname + '/form/signup.html'));
+	app.get('/auth/register', function (req, res) {
+		res.sendFile(path.join(__dirname + '/form/register.html'));
+
+/*
+	    var captcha = svgCaptcha.create();
+	//    req.session.captcha = captcha.text;
+	    res.type('svg');
+	    res.status(200).send(captcha.data);
+*/	    
+
 	});  
   
 /*
