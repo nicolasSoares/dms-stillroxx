@@ -1,26 +1,26 @@
-const t = [
-	{
-		mail: "byers@langly.fr",
-		pwd: "noob1234",
-	},
-	{
-		mail: "langly@langly.fr",
-		pwd: "titi1234",
-	}
-]
-
-const express = require('express');
-const app = express('express')();
+const app = require('express')();
 const co = require('co');
+const mongoClient = require("mongodb").MongoClient
+const port = process.env.PORT || 3002;
 
 co(function* () {
-  app.get('/', (req, res) => {
-    res.send('Hello World!');
-  });
+	const db = (yield mongoClient.connect(process.env.MONGOLAB_URI)).db();
 
-  app.use('/signin', express.static('form'))
-  app.listen(process.env.PORT, _ => console.log('App is listening !'));
+  app.get('/', wrapAsync(function* (req, res, next) {
+  	const totos = yield db.collection('toto').find().toArray();
+    res.send("hello there" + totos);
+  }));
 
+  app.listen(port, _ => console.log('App is listening !'));
+  
 }).catch(err => {
 	console.error(err);
 });
+
+function wrapAsync(fn) {
+	return (req, res, next) => {
+		co(function*() {
+			yield fn(req, res, next);
+		}).catch(next);
+	};
+}
