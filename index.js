@@ -12,6 +12,7 @@ const t = [
 ];
 
 const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const app = express();
 const co = require('co');
@@ -25,6 +26,14 @@ co(function* () {
 	const Accounts = yield require('./db')();
 
 	app.use(bodyParser.urlencoded({ extended: true }));
+	app.use(["/captcha.jpg","/auth/register"], session({
+		secret: "azertylol",
+		resave: "false",
+		saveUninitialized: "false",
+		cookie: {
+			maxAge: 20000
+		}
+	}));
 
 	app.get('/test', wrapAsync(function* (req, res, next) {
 		yield Accounts.update({name: "marc"}, {a:1,r:45,g:true});
@@ -38,7 +47,6 @@ co(function* () {
 
 
 	// Sign In form
-
 	app.get('/auth/login', (req, res) => {
 		res.sendFile(path.join(__dirname + '/form/login.html'));
 	});
@@ -49,9 +57,21 @@ co(function* () {
 	}));
 
 	//Sign Up form
-
 	app.get('/auth/register', function (req, res) {
 		res.sendFile(path.join(__dirname + '/form/register.html'));
+	});
+
+
+	app.post('/auth/register', function (req, res) {
+		if (!("captchaText" in req.session)){
+			throw new Error("captcha out")
+		}
+		if (req.session.captchaText === req.body.captcha){
+			//adduser 
+			res.send("hello")
+		} else {
+			throw new Error("GFY§§")
+		}
 	});
 
 
@@ -61,28 +81,14 @@ co(function* () {
 		// generate svg image
 		var captcha = svgCaptcha(text);
 		// generate both and returns an object
-		var captcha = svgCaptcha.create();
-		console.log(captcha);
+		var captcha = svgCaptcha.create({size:5});
+		req.session.captchaText = captcha.text
+
 		res.type('svg');
 		res.send(captcha.data);
 
 	});
 
-
-/*
-	app.post('/auth/register', function (req, res) {
-		res.sendFile(path.join(__dirname + '/form/register.html'));
-
-		// Captcha
-		var text = svgCaptcha.randomText();
-		// generate svg image
-		var captcha = svgCaptcha(text);
-		// generate both and returns an object
-		var captcha = svgCaptcha.create();
-		console.log(captcha);
-
-	});
-*/
 
 	//JWT admin to access it
 	app.get('/get/allusers', function (req, res) {
