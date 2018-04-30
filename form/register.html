@@ -6,15 +6,18 @@
 </head>
 <body>
     <p>
-        <form method="post" action="/signup">
+        <form method="post" action="/auth/register">
             Email are not check so don't be fool if you loose your password you'll not be able to recover it and we don't reset password manually.<br/>
+            Type your mail <br/>
             <input type="username" name="name"/><br/>
             Type your password <br/>
             <input type="password" name="pwd"/><br/>
             Type your password again <br/>
             <input type="password" name="pwd1"/> <br/>
             Please fille the captcha to register your account <br/>
-            <input type="captcha" name="captcha"/> <br/>
+            <img src="/captcha.jpg"> <br/>
+            <input type="text" name="captcha"/> <br/>
+
             <input type="submit" value="Register Me!" /><br/>
         </form>
     </p>

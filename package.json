@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Dead man switch in node JS hosted on Heroku",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "run" : "nodemon index.js"
   },
   "keywords": [
     "heroku",
@@ -20,5 +21,8 @@
     "mongodb": "*",
     "pug": "^2.0.3",
     "svg-captcha": "^1.3.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }

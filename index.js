@@ -20,10 +20,11 @@ const port = process.env.PORT || 3002;
 const path = require('path');
 const svgCaptcha = require('svg-captcha');
 
+
 co(function* () {
 	const Accounts = yield require('./db')();
-	
-	app.use(bodyParser.urlencoded({ extended: true }));  
+
+	app.use(bodyParser.urlencoded({ extended: true }));
 
 	app.get('/test', wrapAsync(function* (req, res, next) {
 		yield Accounts.update({name: "marc"}, {a:1,r:45,g:true});
@@ -45,27 +46,52 @@ co(function* () {
 	app.post('/auth/login', wrapAsync(function* (req, res, next) {
 		const account = yield Accounts.connect(req.body);
 		res.send("bienvenue: " + account.name);
-	}));  
+	}));
 
 	//Sign Up form
 
 	app.get('/auth/register', function (req, res) {
 		res.sendFile(path.join(__dirname + '/form/register.html'));
-	});  
-  
+	});
+
+
+	app.get('/captcha.jpg', function (req, res){
+		// Captcha
+		var text = svgCaptcha.randomText();
+		// generate svg image
+		var captcha = svgCaptcha(text);
+		// generate both and returns an object
+		var captcha = svgCaptcha.create();
+		console.log(captcha);
+		res.type('svg');
+		res.send(captcha.data);
+
+	});
+
+
 /*
 	app.post('/auth/register', function (req, res) {
-		var captcha = svgCaptcha.create();
-	//  req.session.captcha = captcha.text;
-	    res.type('svg');
-	    res.status(200).send(captcha.data);		
+		res.sendFile(path.join(__dirname + '/form/register.html'));
 
-		res.end(`<p>CAPTCHA VALID: ${ captcha.check(req, req.body[captchaFieldName]) }</p>`)
-	});  
+		// Captcha
+		var text = svgCaptcha.randomText();
+		// generate svg image
+		var captcha = svgCaptcha(text);
+		// generate both and returns an object
+		var captcha = svgCaptcha.create();
+		console.log(captcha);
+
+	});
 */
 
+	//JWT admin to access it
+	app.get('/get/allusers', function (req, res) {
+		res.json(t);
+	});
+
+
   app.listen(port, _ => console.log('App is listening on port ', port));
-  
+
 }).catch(err => {
 	console.error(err);
 });
