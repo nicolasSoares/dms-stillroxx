@@ -5,7 +5,7 @@ co(function*() {
 	const db = yield require('./db.js')();
 	const crons = yield db.getCrons();
 	crons.forEach(cron => {
-		console.log(cron);
+		console.log('create cron: ', cron.crontime, cron.name);
 		var	job = new CronJob({
 		  cronTime: cron.crontime,
 		  context: {name: cron.name},
