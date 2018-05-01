@@ -17,8 +17,8 @@ const co = require('co');
 });
 */
 	var	job = new CronJob({
-			cronTime: '* * * * * *',
-			ontTick: bot.testcron,
-			start: true,
-			timeZone: "America/Los_Angeles"
+  cronTime: "00 * * * * *", // everyday, 9:13, 11:13, 4:13, 8:13,
+  onTick: bot.testcron,
+  start: true,
+  timeZone: "America/Los_Angeles"
 		});
