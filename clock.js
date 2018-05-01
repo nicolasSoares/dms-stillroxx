@@ -1,9 +1,8 @@
 const CronJob = require('cron').CronJob;
 const bot = require('./worker.js');
 const co = require('co');
-const db = require('./db.js').init();
-
 co(function*() {
+	const db = yield require('./db.js')();
 	const crons = yield db.getCrons();
 	crons.forEach(cron => {
 		new cronJob({
