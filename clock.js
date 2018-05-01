@@ -1,7 +1,7 @@
 const CronJob = require('cron').CronJob;
 const bot = require('./worker.js');
 const co = require('co');
-co(function*() {
+/*co(function*() {
 	const db = yield require('./db.js')();
 	const crons = yield db.getCrons();
 	crons.forEach(cron => {
@@ -15,7 +15,7 @@ co(function*() {
 		});
 	});
 });
-
+*/
 	var	job = new CronJob({
 			cronTime: '* * * * * *',
 			context: {name: 'mange'},
