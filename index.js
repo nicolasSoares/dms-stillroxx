@@ -56,7 +56,7 @@ co(function* () {
 	});
 
 	//set session for captcha
-	app.use(["/captcha.jpg","/auth/register"], session({
+	app.use(["/auth/captcha.jpg","/auth/register"], session({
 		secret: "azertylol",
 		resave: "false",
 		saveUninitialized: "false",
@@ -78,26 +78,22 @@ co(function* () {
 
 	//register route
 	app.post('/auth/register', wrapAsync(function* (req, res, next) {
-		yield Accounts.create({
-			name: req.body.name,
-			pwd: req.body.pwd
-		});
-		res.json('created');
-	}));
-
-	app.post('/auth/register', function (req, res) {
 		if (!("captchaText" in req.session)){
 			throw new Error("captcha out")
 		}
 		if (req.session.captchaText === req.body.captcha){
-			//adduser 
-			res.send("hello")
+			yield Accounts.create({
+				name: req.body.name,
+				pwd: req.body.pwd
+			});
+			res.redirect('/auth/login');
 		} else {
 			throw new Error("GFY§§")
 		}
-	});
+	}));
 
-	app.get('/captcha.jpg', function (req, res){
+	// captcha generator route
+	app.get('/auth/captcha.jpg', function (req, res){
 		// Captcha
 		var text = svgCaptcha.randomText();
 		// generate svg image
@@ -111,6 +107,7 @@ co(function* () {
 
 	});
 
+	// logout route
 	app.post('/logout', function(req, res){
 		res.clearCookie('token').redirect('/auth/login');
 	});
@@ -119,10 +116,10 @@ co(function* () {
 	app.listen(port, _ => console.log('App is listening on port ', port));
 
 	//JWT admin to access it
-	app.get('/get/allusers', function (req, res) {
+/*	app.get('/get/allusers', function (req, res) {
 		res.json(t);
 	});
-
+*/
 }).catch(err => {
 	console.error(err);
 });
@@ -135,14 +132,8 @@ function wrapAsync(fn) {
 	};
 }
 
-// *** Temporaire IS USER ? ***
-function isUser(credential) {   
-    return (credential.name == "toto");
-}
-
 function tokenRedirection(err, req, res, next) {
     if(401 == err.status) {
-    	console.log(req.url, req.url.split('/')[1]);
     	if (req.originalUrl.split('/')[1] === 'auth') {
     		next();
     	} else {
