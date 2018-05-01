@@ -1,7 +1,8 @@
 const CronJob = require('cron').CronJob;
 const bot = require('./worker.js');
 const co = require('co');
-(function loadCrons() {
+
+function loadCrons() {
 	co(function*() {
 		const db = yield require('./db.js')();
 		const crons = yield db.getCrons();
@@ -16,7 +17,7 @@ const co = require('co');
 			});
 		});
 	});
-})();
+}
 
 var	job = new CronJob({
   cronTime: '00 * * * * *',
@@ -24,3 +25,5 @@ var	job = new CronJob({
   start: true,
   timeZone: "America/Los_Angeles"
 });
+
+loadCrons();
