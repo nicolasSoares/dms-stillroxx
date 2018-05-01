@@ -1,9 +1,17 @@
 const CronJob = require('cron').CronJob;
 const bot = require('./worker.js');
+const co = require('co');
+const db = require('./db.js').init();
 
-var job = new CronJob({
-  cronTime: "00 * * * * *", // everyday, 9:13, 11:13, 4:13, 8:13,
-  onTick: bot.testcron,
-  start: true,
-  timeZone: "America/Los_Angeles"
+co(function*() {
+	const crons = yield db.getCrons();
+	crons.forEach(cron => {
+		new cronJob({
+			cronTime: cron.crontime,
+			context: {name: cron.name},
+			ontTick: bot.testcron,
+			start: true,
+			timeZone: "America/Los_Angeles"
+		});
+	});
 });

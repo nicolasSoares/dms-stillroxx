@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const secretBuffer = new Buffer('secret').toString('base64');
 
 
-
 function* init() {
 	const accounts = (yield mongoClient.connect(process.env.MONGOLAB_URI)).db().collection('accounts');
 
@@ -33,10 +32,16 @@ function* init() {
 		);
 	}
 
+	function* getCrons() {
+		const crons = yield accounts.find({"crontime": { $exists : true, $ne : null }}).toArray();
+		return crons;	
+	}
+
 	return {
 		connect,
 		create,
-		update
+		update,
+		getCrons
 	};
 };
 

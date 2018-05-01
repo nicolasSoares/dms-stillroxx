@@ -72,24 +72,19 @@ co(function* () {
 
 	// login route
 	app.post('/auth/login', wrapAsync(function* (req, res, next) {
+		const crons = yield Accounts.getCrons();
 		const account = yield Accounts.connect(req.body);
 		res.cookie('token', account.token).redirect('/test');
 	}));
 
 	//register route
-	app.post('/auth/register', wrapAsync(function* (req, res, next) {
-		if (!("captchaText" in req.session)){
-			throw new Error("captcha out")
-		}
-		if (req.session.captchaText === req.body.captcha){
-			yield Accounts.create({
-				name: req.body.name,
-				pwd: req.body.pwd
-			});
-			res.redirect('/auth/login');
-		} else {
-			throw new Error("GFY§§")
-		}
+	app.post('/auth/register', captchaMiddleware, wrapAsync(function* (req, res, next) {
+		yield Accounts.create({
+			name: req.body.name,
+			pwd: req.body.pwd,
+			crontime: req.body.crontime
+		});
+		res.redirect('/auth/login');
 	}));
 
 	// captcha generator route
@@ -130,6 +125,16 @@ function wrapAsync(fn) {
 			yield fn(req, res, next);
 		}).catch(next);
 	};
+}
+
+function captchaMiddleware(req, res, next) {
+	if (!("captchaText" in req.session)){
+		throw new Error("captcha out")
+	}
+	if (req.session.captchaText !== req.body.captcha){
+		throw new Error("GFY§§")
+	}
+	next();
 }
 
 function tokenRedirection(err, req, res, next) {
