@@ -37,11 +37,17 @@ function* init() {
 		return crons;	
 	}
 
+	function* getAll() {
+		const allaccount = yield accounts.find({}).toArray();
+		return allaccount;	
+	}
+
 	return {
 		connect,
 		create,
 		update,
-		getCrons
+		getCrons,
+		getAll
 	};
 };
 

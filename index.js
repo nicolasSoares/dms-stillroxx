@@ -106,14 +106,15 @@ co(function* () {
 		res.clearCookie('token').redirect('/auth/login');
 	});
 
+	//JWT admin to access it
+	app.get('/get/allusers', wrapAsync(function* (req, res, next) {
+		res.json(yield Accounts.getAll());
+	}));
+
 	// launch server
 	app.listen(port, _ => console.log('App is listening on port ', port));
 
-	//JWT admin to access it
-/*	app.get('/get/allusers', function (req, res) {
-		res.json(t);
-	});
-*/
+
 }).catch(err => {
 	console.error(err);
 });
