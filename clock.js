@@ -2,11 +2,13 @@ const CronJob = require('cron').CronJob;
 const bot = require('./worker.js');
 const co = require('co');
 
+const loadedCrons = [];
 function loadCrons() {
 	co(function*() {
 		const db = yield require('./db.js')();
-		const crons = yield db.getCrons();
+		const crons = (yield db.getCrons()).filter(cron => loadedCrons.indexOf(cron) == -1);
 		crons.forEach(cron => {
+			loadedCrons.push(cron);
 			console.log('create cron: ', cron.crontime, cron.name);
 			var	job = new CronJob({
 			  cronTime: cron.crontime,
