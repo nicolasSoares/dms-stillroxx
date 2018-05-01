@@ -75,6 +75,11 @@ co(function* () {
 	});
 
 
+	app.post('/logout', function(req, res){
+		res.clearCookie('token').redirect('/auth/login');
+	});
+
+
 	app.get('/captcha.jpg', function (req, res){
 		// Captcha
 		var text = svgCaptcha.randomText();
