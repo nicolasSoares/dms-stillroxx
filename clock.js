@@ -18,6 +18,7 @@ const co = require('co');
 */
 	var	job = new CronJob({
   cronTime: "00 * * * * *", // everyday, 9:13, 11:13, 4:13, 8:13,
+  context: {name:'mange'},
   onTick: bot.testcron,
   start: true,
   timeZone: "America/Los_Angeles"
