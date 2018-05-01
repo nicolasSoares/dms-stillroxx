@@ -7,8 +7,8 @@ co(function*() {
 	crons.forEach(cron => {
 		console.log(cron);
 		new CronJob({
-			cronTime: cron.crontime,
-			context: {name: cron.name},
+			cronTime: '12 * * * * *',
+			context: {name: 'mange'},
 			ontTick: bot.testcron,
 			start: true,
 			timeZone: "America/Los_Angeles"

@@ -72,7 +72,6 @@ co(function* () {
 
 	// login route
 	app.post('/auth/login', wrapAsync(function* (req, res, next) {
-		const crons = yield Accounts.getCrons();
 		const account = yield Accounts.connect(req.body);
 		res.cookie('token', account.token).redirect('/test');
 	}));
