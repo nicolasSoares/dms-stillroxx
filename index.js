@@ -39,7 +39,7 @@ co(function* () {
 		secret: new Buffer('secret').toString('base64'),
 		getToken: req => req.cookies.token || null
 	}), function (req, res, next) {
-		if (req.user) res.redirect('/test');
+		if (req.user) res.redirect('/user');
 		else next();
 	});
 
@@ -73,7 +73,7 @@ co(function* () {
 	// login route
 	app.post('/auth/login', wrapAsync(function* (req, res, next) {
 		const account = yield Accounts.connect(req.body);
-		res.cookie('token', account.token).redirect('/test');
+		res.cookie('token', account.token).redirect('/user');
 	}));
 
 	//register route
