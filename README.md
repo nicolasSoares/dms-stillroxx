@@ -13,5 +13,8 @@ https://www.npmjs.com/package/emailjs
 + How to mitigate DDoS attack
 + Secure email
 + Find a domain name
-+ Create contact mail + GPG + canary 
++ Create contact mail + GPG + canary sign PGP
 + Add 2FA
++ Monitoring mail should always be launch !
++ Rotation between multiple mail account (gmail/cock.li/protonmail/langly.fr/dmsmail?)
++ File upload 20Mo max ?

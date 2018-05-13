@@ -1,26 +1,26 @@
 <!doctype html>
 <head>
-    <title>
-        Register to DMS website
-    </title>
+    <title> Register to DMS website</title>
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-lite.min.css">
+
 </head>
 <body>
     <p>
-        <form method="post" action="/auth/register">
-            Email are not check so don't be fool if you loose your password you'll not be able to recover it and we don't reset password manually.<br/>
-            Type your mail <br/>
-            <input type="username" name="name"/><br/>
-            Type your password <br/>
+        Here you can register a new account, account are deleted every time an action is launch (If you miss the rendez-vous) so warning.
+        <form method="post" action="/auth/register" style="top: 50%; left: 50%; margin-right: -50%;margin: 0;">
+            Register<br/>
+            Email are not check so if you loose your password you'll not be able to recover it and we don't reset password manually.<br/>
+            Type your mail 
+            <input type="text" name="name"/><br/>
+            Type your password 
             <input type="password" name="pwd"/><br/>
-            Type your password again <br/>
+            Type your password again 
             <input type="password" name="pwd1"/> <br/>
-            Please resolve the captcha to register your account <br/>
-            <img src="/auth/captcha.jpg"> <br/>
+            <img src="/auth/captcha.jpg" style="float: left">
             <input type="text" name="captcha"/> <br/>
-            Type your cron time <br/>
+            Type your cron time 
             <input type="text" name="crontime"/> <br/>
-
-            <input type="submit" value="Register Me!" /><br/>
+            <input type="submit" value="Register" /><br/>
         </form>
     </p>
 </body>
