@@ -1,0 +1,32 @@
+<!doctype html>
+<head>
+    <title>Dead Man Switch : Sign In</title>
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-lite.min.css">
+</head>
+<body>
+  <header class="sticky">
+    <a href="/" role="button">Home</a>
+    <a href="/faq" role="button">FAQ</a>
+    <a href="/contact" role="button">Contact</a>
+  </header>
+    <center>
+    <p>
+        <form method="post" action="/auth/login"> 
+        <fieldset>
+          <legend>Login form</legend>
+            <div class="input-group fluid">
+              <label for="username" style="width: 80px;">Username</label>
+              <input type="text" name="name">
+            </div>
+            <div class="input-group fluid">
+              <label for="pwd" style="width: 80px;">Password</label>
+              <input type="password" name="pwd">
+            </div>
+            <div class="input-group fluid">
+              <button value="login" type="submit" class="primary">Login</button>
+            </div>
+        </fieldset>
+        </form>
+    </p>
+    </center>
+</body>
