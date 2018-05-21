@@ -32,7 +32,8 @@ co(function* () {
 	app.use(jwt({
 		secret: new Buffer('secret').toString('base64'),
 		getToken: req => req.cookies.token || null
-	}).unless({path: [{url: /\/auth/i}]}));
+	}).unless({path: [{url: /\/auth/i}, {url: /\/faq/}, {url: /\/contact/}, {url: /\/privacy/}, {url: /\/index/}]}));
+
 
 	app.use('/auth/*', jwt({
 		credentialsRequired: false,

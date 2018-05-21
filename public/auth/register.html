@@ -10,15 +10,17 @@
     <a href="/faq" role="button">FAQ</a>
     <a href="/contact" role="button">Contact</a>
     <a href="/auth/login" role="button">Login</a>
+    <a href="/auth/register" role="button">Register</a>
   </header>
     <p>
         Here you can register a new account, account are deleted every time an action is launch (If you miss the rendez-vous) so warning.
-        <form method="post" action="/auth/register">
+        <center>
+        <form method="post" action="/auth/register" style="display: inline-block; text-align: center;">
                     <fieldset>
                                   <legend>Register form</legend>
             Email are not check so if you loose your password you'll not be able to recover it and we don't reset password manually.<br/>
-             
-            <div class="input-group fluid">
+             <center>
+            <div class="input-group fluid"> 
               <label for="username" style="width: 80px;">E-Mail Address</label>
               <input type="text" name="name">
             </div>
@@ -30,7 +32,7 @@
             <br/>
             <div class="input-group fluid">
               <label for="pwd" style="width: 80px;">Confirm Password</label>
-              <input type="password" name="pwd1">
+              <input type="password" name="pwd1" >
             </div> <br/>
 
             <div class="input-group fluid">
@@ -44,8 +46,10 @@
             </div> <br/>
 
             <input type="submit" value="Register" /><br/>
+        </center>
                 </fieldset>
         </form>
+        </center>
     </p>
     <footer>
     <p>
