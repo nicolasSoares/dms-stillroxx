@@ -32,7 +32,14 @@ co(function* () {
 	app.use(jwt({
 		secret: new Buffer('secret').toString('base64'),
 		getToken: req => req.cookies.token || null
-	}).unless({path: [{url: /\/auth/i}, {url: /\/faq/}, {url: /\/contact/}, {url: /\/privacy/}, {url: /\/index/}, {url: /\/test.css/}, {url: /\/mini-lite.min.css/}, {url: /\/bulma/}, {url: /\/canary.txt/}]}));
+	}).unless({path: [
+		{url: /\/auth/i},
+		{url: /\/assets/i},
+		{url: /\/faq/},
+		{url: /\/contact/},
+		{url: /\/privacy/},
+		{url: /\/index/}]
+	}));
 
 
 	app.use('/auth/*', jwt({
