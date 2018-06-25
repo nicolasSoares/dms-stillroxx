@@ -75,7 +75,7 @@ co(function* () {
 	}));
 
 	// distribute public directory ("path/to/file.html" => /path/to/file route)
-	app.use(express.static(path.join(__dirname, 'public'),{index:false,extensions:['html']}));
+	app.use(express.static(path.join(__dirname, 'public'),{index:false,extensions:['html', 'css', 'js']}));
 
 	/* ROUTES */
 
