@@ -1,0 +1,8 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+    <link rel="stylesheet" href="http://127.0.0.1:3003/mini-lite.min.css">
+    <link rel="stylesheet" href="http://127.0.0.1:3003/test.css">
+
+-----BEGIN PGP SIGNATURE-----
+
+-----END PGP SIGNATURE-----

@@ -7,6 +7,7 @@ const secretBuffer = new Buffer('secret').toString('base64');
 
 
 function* init() {
+	//const accounts = (yield mongoClient.connect(process.env.MONGOLAB_URI)).db().collection('accounts');
 	const accounts = (yield mongoClient.connect(process.env.MONGOLAB_URI)).db().collection('accounts');
 
 	function* connect(credentials) {

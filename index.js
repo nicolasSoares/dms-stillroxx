@@ -32,7 +32,7 @@ co(function* () {
 	app.use(jwt({
 		secret: new Buffer('secret').toString('base64'),
 		getToken: req => req.cookies.token || null
-	}).unless({path: [{url: /\/auth/i}, {url: /\/faq/}, {url: /\/contact/}, {url: /\/privacy/}, {url: /\/index/}]}));
+	}).unless({path: [{url: /\/auth/i}, {url: /\/faq/}, {url: /\/contact/}, {url: /\/privacy/}, {url: /\/index/}, {url: /\/test.css/}, {url: /\/mini-lite.min.css/}, {url: /\/bulma/}, {url: /\/canary.txt/}]}));
 
 
 	app.use('/auth/*', jwt({
@@ -58,6 +58,7 @@ co(function* () {
 
 	//set session for captcha
 	app.use(["/auth/captcha.jpg","/auth/register"], session({
+		// Change the secret if your use this app in prod !
 		secret: "azertylol",
 		resave: "false",
 		saveUninitialized: "false",

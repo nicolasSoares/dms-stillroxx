@@ -1,13 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <head>
     <title>Dead Man Switch : Sign In</title>
-    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-lite.min.css">
+    <link rel="stylesheet" href="http://127.0.0.1:3003/mini-lite.min.css">
 </head>
 <body>
   <header class="sticky">
-    <a href="/" role="button">Home</a>
+    <a href="/index" role="button">Home</a>
     <a href="/faq" role="button">FAQ</a>
     <a href="/contact" role="button">Contact</a>
+    <a href="https://github.com/nicolasSoares/dms-stillroxx" role="button">Github</a>
     <a href="/auth/login" role="button">Login</a>
     <a href="/auth/register" role="button">Register</a>
   </header>
@@ -19,13 +20,14 @@
             <div class="input-group fluid">
               <label for="username" style="width: 80px;">Username</label>
               <input type="text" name="name">
-            </div><br/>
+            </div>
             <div class="input-group fluid">
               <label for="pwd" style="width: 80px;">Password</label>
               <input type="password" name="pwd">
-            </div><br/>
+            </div>
             <div class="input-group fluid">
               <button value="login" type="submit" class="primary">Login</button>
+              <a href="/auth/register">No account ? You can register here !</a>
             </div>
         </fieldset>
         </form>
@@ -33,7 +35,7 @@
     </center>
             <footer>
     <p>
-        <a href="/privacy">Privacy</a>
+        <a href="/privacy">Privacy</a> / <a href="/canary.txt">Transparency</a>
     </p>
     </footer>
 </body>
