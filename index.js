@@ -22,45 +22,33 @@ co(function* () {
 	const Accounts = yield require('./db')();
 
 	/* MIDDLEWARES */
+	app.engine('ejs', function () {
+		console.log(arguments)
+		return require('ejs').__express(...arguments);
+	});
+app.set('views', __dirname + '/public/pages');
+app.set('view engine', 'ejs');
 
 	// setup express
 	app.use(nocache());
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(cookieParser());
 
+
+
+
 	// token middlewares
+
 	app.use(jwt({
-		secret: new Buffer('secret').toString('base64'),
-		getToken: req => req.cookies.token || null
-	}).unless({path: [
-		{url: /\/auth/i},
-		{url: /\/assets/i},
-		{url: /\/faq/},
-		{url: /\/contact/},
-		{url: /\/privacy/},
-		{url: /\/index/}]
-	}));
-
-
-	app.use('/auth/*', jwt({
 		credentialsRequired: false,
 		secret: new Buffer('secret').toString('base64'),
 		getToken: req => req.cookies.token || null
 	}), function (req, res, next) {
-		if (req.user) res.redirect('/user');
-		else next();
-	});
-
-	// error and redirection middleware
-	tokenRedirection.unless = unless;
-	app.use(tokenRedirection);
-
-	app.use(function (err, req, res, next) {
-		if (401 == err.status) {
-			next();
+		console.log(req.path, !req.user, req.user)
+		if (req.path === '/user' && !req.user) {
+			next(new Error('woops'));
 		}
-		console.log(err)
-		res.status(404).json(err);
+		next();
 	});
 
 	//set session for captcha
@@ -74,8 +62,6 @@ co(function* () {
 		}
 	}));
 
-	// distribute public directory ("path/to/file.html" => /path/to/file route)
-	app.use(express.static(path.join(__dirname, 'public'),{index:false,extensions:['html', 'css', 'js']}));
 
 	/* ROUTES */
 
@@ -119,6 +105,27 @@ co(function* () {
 	app.get('/get/allusers', wrapAsync(function* (req, res, next) {
 		res.json(yield Accounts.getAll());
 	}));
+
+
+	// distribute public directory ("path/to/file.html" => /path/to/file route)
+	app.use(express.static(path.join(__dirname, 'public/'),{index:false,extensions:['css', 'js']}));
+
+	app.get('/*', wrapAsync(function* (req, res, next) {
+		res.render(req.path.slice(1), {user: req.user});
+	}));
+
+	// error and redirection middleware
+	tokenRedirection.unless = unless;
+	app.use(tokenRedirection);
+
+	app.use(function (err, req, res, next) {
+		console.log("ERROR TAVYU: ", err)
+		if (401 == err.status) {
+			next();
+		}
+		console.log(err)
+		res.status(404).json(err);
+	});
 
 	// launch server
 	app.listen(port, _ => console.log('App is listening on port ', port));

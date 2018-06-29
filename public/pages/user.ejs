@@ -4,15 +4,9 @@
     <link rel="stylesheet" href="/assets/style/libs/mini-lite.min.css">
 </head>
 <body>
-    <header class="sticky">
-        <a href="/index" role="button">Home</a>
-        <a href="/faq" role="button">FAQ</a>
-        <a href="/contact" role="button">Contact</a>
-        <a href="https://github.com/nicolasSoares/dms-stillroxx" role="button">Github</a>
-        <a href="/user" role="button">USERNAME</a>
-    </header>
+    <%- include('../partials/header'); -%>
     <p>
-        Welcome %machin%.
+        Welcome <%= user.name %>.
     </p>
 
     <p>

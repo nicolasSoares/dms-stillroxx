@@ -1,0 +1,9 @@
+    <header class="sticky">
+        <a href="/index" role="button">Home</a>
+        <a href="/faq" role="button">FAQ</a>
+        <a href="/contact" role="button">Contact</a>
+        <a href="https://github.com/nicolasSoares/dms-stillroxx" role="button">Github</a>
+        <% if (user) { %>
+	        <a href="/user" role="button"><%= user.name %></a>
+        <% } %>
+    </header>
